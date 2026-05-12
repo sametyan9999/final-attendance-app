@@ -12,31 +12,37 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface TaskMapper {
 
-    // タスク一覧取得（10件ずつ）
-    @Select("""
-        SELECT
-            id,
-            username,
-            title,
-            content,
-            name,
-            start_date AS startDate,
-            end_date AS endDate,
-            created_at AS createdAt,
-            updated_at AS updatedAt
-        FROM tasks
-        ORDER BY id DESC
-        LIMIT #{limit}
-        OFFSET #{offset}
-    """)
-    List<Task> findAll(@Param("limit") int limit, @Param("offset") int offset);
+	// タスク一覧取得（ログインユーザーのタスクを10件ずつ）
+	@Select("""
+	    SELECT
+	        id,
+	        username,
+	        title,
+	        content,
+	        name,
+	        start_date AS startDate,
+	        end_date AS endDate,
+	        created_at AS createdAt,
+	        updated_at AS updatedAt
+	    FROM tasks
+	    WHERE username = #{username}
+	    ORDER BY id DESC
+	    LIMIT #{limit}
+	    OFFSET #{offset}
+	""")
+	List<Task> findByUsername(
+	        @Param("username") String username,
+	        @Param("limit") int limit,
+	        @Param("offset") int offset
+	);
 
-    // タスク件数取得
-    @Select("""
-        SELECT COUNT(*)
-        FROM tasks
-    """)
-    int countAll();
+	// タスク件数取得（ログインユーザーの件数）
+	@Select("""
+	    SELECT COUNT(*)
+	    FROM tasks
+	    WHERE username = #{username}
+	""")
+	int countByUsername(String username);
 
     // IDで1件取得
     @Select("""

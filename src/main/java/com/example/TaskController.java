@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class TaskController {
 
@@ -22,13 +24,18 @@ public class TaskController {
     @GetMapping("/tasks")
     public String showTasks(
             @RequestParam(name = "page", defaultValue = "1") int page,
-            Model model) {
+            Model model,
+            HttpSession session) {
+
+        User loginUser = (User) session.getAttribute("loginUser");
+
+        String username = loginUser.getUsername();
 
         int size = 10;
 
-        List<Task> list = taskService.findAll(page, size);
+        List<Task> list = taskService.findByUsername(username, page);
 
-        int totalCount = taskService.countAll();
+        int totalCount = taskService.countByUsername(username);
 
         int totalPages = (int) Math.ceil((double) totalCount / size);
 
@@ -59,10 +66,11 @@ public class TaskController {
 
     // タスク新規登録処理
     @PostMapping("/tasks")
-    public String createTask(Task task) {
+    public String createTask(Task task, HttpSession session) {
 
-        // 仮のユーザー名
-        task.setUsername("test");
+        User loginUser = (User) session.getAttribute("loginUser");
+
+        task.setUsername(loginUser.getUsername());
 
         taskService.insert(task);
 
