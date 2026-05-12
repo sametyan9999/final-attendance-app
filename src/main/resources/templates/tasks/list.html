@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>タスク一覧画面</title>
+
+    <link rel="stylesheet" href="/css/tasks.css">
+</head>
+
+<body>
+
+<h1>タスク一覧</h1>
+
+<!-- ログアウト -->
+<div class="top-action">
+    <a class="logout-btn" href="/logout">
+        ログアウト
+    </a>
+</div>
+
+<!-- タスク0件の時 -->
+<div class="empty-message" th:if="${#lists.isEmpty(tasks)}">
+    📝 現在タスクは登録されていません。「新規作成」から追加してください。
+</div>
+
+<!-- タスクがある時 -->
+<table th:if="${!#lists.isEmpty(tasks)}">
+
+    <tr>
+        <th class="id-column">ID</th>
+        <th class="title-column">タイトル</th>
+        <th class="content-column">内容</th>
+        <th class="name-column">登録者</th>
+        <th class="date-column">開始日</th>
+        <th class="date-column">終了日</th>
+        <th class="datetime-column">作成日時</th>
+        <th class="datetime-column">更新日時</th>
+        <th class="action-column">操作</th>
+    </tr>
+
+    <tr th:each="task : ${tasks}">
+
+        <td class="id-column"
+            th:text="${task.id}">
+        </td>
+
+        <td class="title-column"
+            th:text="${task.title}">
+        </td>
+
+        <td class="content-column"
+            th:text="${task.content}">
+        </td>
+
+        <td class="name-column"
+            th:text="${task.name}">
+        </td>
+
+        <td class="date-column"
+            th:text="${task.startDate}">
+        </td>
+
+        <td class="date-column"
+            th:text="${task.endDate}">
+        </td>
+
+        <td class="datetime-column"
+            th:text="${#temporals.format(task.createdAt, 'yyyy-MM-dd HH:mm:ss')}">
+        </td>
+
+        <td class="datetime-column"
+            th:text="${#temporals.format(task.updatedAt, 'yyyy-MM-dd HH:mm:ss')}">
+        </td>
+
+        <td class="action-column action-buttons">
+
+            <!-- 編集 -->
+            <a class="edit-btn"
+               th:href="@{/tasks/edit/{id}(id=${task.id})}">
+                編集
+            </a>
+
+            <!-- 削除 -->
+            <form th:action="@{/tasks/delete/{id}(id=${task.id})}"
+                  method="post">
+
+                <button type="submit" class="delete-btn">
+                    削除
+                </button>
+
+            </form>
+
+        </td>
+
+    </tr>
+
+</table>
+
+<!-- ページネーション -->
+<div class="pagination" th:if="${totalPages > 1}">
+
+    <a th:if="${currentPage > 1}"
+       th:href="@{/tasks(page=${currentPage - 1})}">
+        ← 前
+    </a>
+
+    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+
+        <a th:if="${i != currentPage}"
+           th:href="@{/tasks(page=${i})}"
+           th:text="${i}">
+        </a>
+
+        <span th:if="${i == currentPage}"
+              class="current-page"
+              th:text="${i}">
+        </span>
+
+    </span>
+
+    <a th:if="${currentPage < totalPages}"
+       th:href="@{/tasks(page=${currentPage + 1})}">
+        次 →
+    </a>
+
+</div>
+
+<!-- 新規作成 -->
+<a class="new-btn" href="/tasks/new">
+    ＋ 新規作成
+</a>
+
+</body>
+</html>

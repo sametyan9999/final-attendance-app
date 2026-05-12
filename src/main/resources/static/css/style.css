@@ -1,0 +1,89 @@
+/* ページ全体 */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+}
+
+/* TOP用 */
+.container {
+    margin-top: 400px;
+}
+
+/* タイトル */
+h1 {
+    font-size: 40px;
+    margin-bottom: 30px;
+    color: #222;
+}
+
+/* ボタン共通 */
+.btn, .form-btn {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+/* TOPボタン用 */
+.btn {
+    width: 105px;
+    margin: 5px;
+}
+
+/* フォームボタン用 */
+.form-btn {
+    width: 100%;
+    border: none;
+}
+
+/* ホバー */
+.btn:hover, .form-btn:hover {
+    opacity: 0.8;
+}
+
+/* 色 */
+.register {
+    background-color: green;
+}
+
+.login {
+    background-color: blue;
+}
+
+/* フォーム */
+.form-container {
+    width: 350px;
+    margin: 200px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.link {
+    margin-top: 15px;
+}
+
+/* バリデーションメッセージ */
+.form-group p {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 0;
+}

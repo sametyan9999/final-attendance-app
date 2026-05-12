@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/task-form.css">
+<head>
+    <meta charset="UTF-8">
+    <title>タスク編集</title>
+
+    <link rel="stylesheet" href="/css/task-form.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>タスク編集</h1>
+
+    <form th:action="@{/tasks/update/{id}(id=${task.id})}" method="post">
+
+        <!-- タイトル -->
+        <div class="form-group">
+            <label>タイトル</label>
+
+            <input type="text"
+                   name="title"
+                   th:value="${task.title}">
+        </div>
+
+        <!-- 内容 -->
+        <div class="form-group">
+            <label>内容</label>
+
+            <textarea name="content"
+                      rows="5"
+                      th:text="${task.content}">
+            </textarea>
+        </div>
+
+        <!-- 登録者 -->
+        <div class="form-group">
+            <label>登録者</label>
+
+            <input type="text"
+                   name="name"
+                   th:value="${task.name}">
+        </div>
+
+        <!-- 開始日 -->
+        <div class="form-group">
+            <label>開始日</label>
+
+            <input type="date"
+                   name="startDate"
+                   th:value="${task.startDate}">
+        </div>
+
+        <!-- 終了日 -->
+        <div class="form-group">
+            <label>終了日</label>
+
+            <input type="date"
+                   name="endDate"
+                   th:value="${task.endDate}">
+        </div>
+
+        <!-- ボタン -->
+        <div class="button-area">
+
+            <button type="submit" class="update-btn">
+                更新
+            </button>
+
+            <a href="/tasks" class="cancel-btn">
+                ← キャンセル
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

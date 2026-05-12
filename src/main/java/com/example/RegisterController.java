@@ -1,0 +1,48 @@
+package com.example;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
+
+@Controller
+public class RegisterController {
+
+    private final UserService userService;
+
+    public RegisterController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/register")
+    public String showRegisterForm(Model model) {
+        model.addAttribute("userForm", new UserForm());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String register(
+            @Valid @ModelAttribute("userForm") UserForm form,
+            BindingResult result
+    ) {
+        if (result.hasErrors()) {
+            return "register";
+        }
+
+        if (userService.existsByUsername(form.getUsername())) {
+            result.rejectValue("username", "", "このユーザー名はすでに使われています");
+            return "register";
+        }
+
+        userService.register(form);
+
+        return "redirect:/register/complete";
+    }
+
+    @GetMapping("/register/complete")
+    public String showRegisterComplete() {
+        return "register-complete";
+    }
+}
