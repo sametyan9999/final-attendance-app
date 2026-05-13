@@ -1,4 +1,4 @@
-package com.example;
+package sample.thymeleaf.web;
 
 import java.util.List;
 
@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import sample.common.dao.entity.Task;
+import sample.common.dao.entity.Login;
+import sample.common.service.TaskService;
 
 @Controller
 public class TaskController {
@@ -27,7 +30,7 @@ public class TaskController {
             Model model,
             HttpSession session) {
 
-        User loginUser = (User) session.getAttribute("loginUser");
+        Login loginUser = (Login) session.getAttribute("loginUser");
 
         String username = loginUser.getUsername();
 
@@ -68,7 +71,7 @@ public class TaskController {
     @PostMapping("/tasks")
     public String createTask(Task task, HttpSession session) {
 
-        User loginUser = (User) session.getAttribute("loginUser");
+        Login loginUser = (Login) session.getAttribute("loginUser");
 
         task.setUsername(loginUser.getUsername());
 

@@ -1,4 +1,4 @@
-package com.example;
+package sample.thymeleaf.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String home() {
-		return "home";
+		return "homePage";
 	}
 	
 }

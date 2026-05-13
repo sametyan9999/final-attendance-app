@@ -1,6 +1,6 @@
-package com.example;
+package sample.common.dao.entity;
 
-public class User {
+public class Login {
 
     private Integer id;
     private String username;

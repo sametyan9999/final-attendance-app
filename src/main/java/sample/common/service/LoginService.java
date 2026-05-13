@@ -1,20 +1,25 @@
-package com.example;
+package sample.common.service;
 
 import org.springframework.stereotype.Service;
 
+import com.example.UserForm;
+
+import sample.common.dao.entity.Login;
+import sample.common.dao.mapper.LoginMapper;
+
 @Service
-public class UserService {
+public class LoginService {
 
-    private final UserMapper userMapper;
+    private final LoginMapper userMapper;
 
-    public UserService(UserMapper userMapper) {
+    public LoginService(LoginMapper userMapper) {
         this.userMapper = userMapper;
     }
 
     // ユーザー登録処理
     public void register(UserForm form) {
 
-        User user = new User();
+        Login user = new Login();
         user.setUsername(form.getUsername());
         user.setPassword(form.getPassword());
 
@@ -22,7 +27,7 @@ public class UserService {
     }
 
     // ユーザー取得
-    public User findByUsername(String username) {
+    public Login findByUsername(String username) {
         return userMapper.findByUsername(username);
     }
 

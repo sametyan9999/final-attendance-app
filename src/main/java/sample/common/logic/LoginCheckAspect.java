@@ -1,4 +1,4 @@
-package com.example;
+package sample.common.logic;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -16,7 +16,7 @@ public class LoginCheckAspect {
         this.session = session;
     }
 
-    @Before("execution(* com.example.TaskController.*(..))")
+    @Before("execution(* sample.thymeleaf.web.TaskController.*(..))")
     public void checkLogin() {
 
         Object loginUser = session.getAttribute("loginUser");

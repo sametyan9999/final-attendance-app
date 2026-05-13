@@ -1,4 +1,4 @@
-package com.example;
+package sample.common.dao.mapper;
 
 import java.util.List;
 
@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import sample.common.dao.entity.Task;
 
 @Mapper
 public interface TaskMapper {

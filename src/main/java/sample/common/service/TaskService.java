@@ -1,8 +1,11 @@
-package com.example;
+package sample.common.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import sample.common.dao.entity.Task;
+import sample.common.dao.mapper.TaskMapper;
 
 @Service
 public class TaskService {

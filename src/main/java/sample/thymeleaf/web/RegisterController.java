@@ -1,18 +1,21 @@
-package com.example;
+package sample.thymeleaf.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.UserForm;
+
 import jakarta.validation.Valid;
+import sample.common.service.LoginService;
 
 @Controller
 public class RegisterController {
 
-    private final UserService userService;
+    private final LoginService userService;
 
-    public RegisterController(UserService userService) {
+    public RegisterController(LoginService userService) {
         this.userService = userService;
     }
 

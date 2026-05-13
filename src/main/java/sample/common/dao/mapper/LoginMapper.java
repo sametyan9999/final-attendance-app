@@ -1,11 +1,13 @@
-package com.example;
+package sample.common.dao.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import sample.common.dao.entity.Login;
+
 @Mapper
-public interface UserMapper {
+public interface LoginMapper {
 
     // =========================
     // ユーザー登録
@@ -14,7 +16,7 @@ public interface UserMapper {
         INSERT INTO login (username, password)
         VALUES (#{username}, #{password})
     """)
-    void insert(User user);
+    void insert(Login user);
 
     // =========================
     // ユーザー取得（ログイン用）
@@ -24,5 +26,5 @@ public interface UserMapper {
         FROM login
         WHERE username = #{username}
     """)
-    User findByUsername(String username);
+    Login findByUsername(String username);
 }

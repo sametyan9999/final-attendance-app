@@ -1,19 +1,23 @@
-package com.example;
+package sample.thymeleaf.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.UserForm;
+
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import sample.common.dao.entity.Login;
+import sample.common.service.LoginService;
 
 @Controller
 public class LoginController {
 
-    private final UserService userService;
+    private final LoginService userService;
 
-    public LoginController(UserService userService) {
+    public LoginController(LoginService userService) {
         this.userService = userService;
     }
 
@@ -42,7 +46,7 @@ public class LoginController {
         }
 
         // ユーザー取得
-        User user = userService.findByUsername(form.getUsername());
+        Login user = userService.findByUsername(form.getUsername());
 
         // ユーザー存在チェック
         if (user == null) {
