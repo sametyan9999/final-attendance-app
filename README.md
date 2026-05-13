@@ -144,3 +144,41 @@ src/main/resources
  │   └ tasks.css
  │
  └ application.properties
+```
+
+---
+
+# 実行方法
+
+## 1. PostgreSQLでDB作成
+
+```sql
+CREATE DATABASE todo_app;
+```
+
+---
+
+## 2. application.properties を設定
+
+```properties
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.url=jdbc:postgresql://localhost:5432/todo_app
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+```
+
+---
+
+## 3. アプリ起動
+
+```bash
+./gradlew bootRun
+```
+
+---
+
+## 4. ブラウザでアクセス
+
+```text
+http://localhost:8080
+```
