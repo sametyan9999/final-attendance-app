@@ -2,6 +2,7 @@ package com.example;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 // ユーザー登録・ログイン画面の入力値を受け取るクラス
 public class UserForm {
@@ -16,6 +17,10 @@ public class UserForm {
 
     // パスワード
     @NotBlank(message = "パスワードを入力してください")
+
+    // 5文字以上
+    @Size(min = 5, message = "パスワードは5文字以上で入力してください")
+
     @Pattern(
         regexp = "^[a-zA-Z0-9]+$",
         message = "パスワードは半角英数字で入力してください"
