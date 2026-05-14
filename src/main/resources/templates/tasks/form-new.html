@@ -14,41 +14,84 @@
 
     <h1>タスク新規作成</h1>
 
-    <form action="/tasks" method="post">
+    <form action="/tasks"
+          method="post"
+          th:object="${task}">
 
         <!-- タイトル -->
         <div class="form-group">
+
             <label>タイトル</label>
 
-            <input type="text" name="title">
+            <input type="text" th:field="*{title}">
+
+            <div th:if="${#fields.hasErrors('title')}"
+                 th:errors="*{title}"
+                 class="error-message">
+            </div>
+
         </div>
 
         <!-- 内容 -->
         <div class="form-group">
+
             <label>内容</label>
 
-            <textarea name="content"></textarea>
+            <textarea th:field="*{content}">
+            </textarea>
+
+            <div th:if="${#fields.hasErrors('content')}"
+                 th:errors="*{content}"
+                 class="error-message">
+            </div>
+
         </div>
 
         <!-- 登録者 -->
         <div class="form-group">
+
             <label>登録者</label>
 
-            <input type="text" name="name">
+            <input type="text" th:field="*{name}">
+
+            <div th:if="${#fields.hasErrors('name')}"
+                 th:errors="*{name}"
+                 class="error-message">
+            </div>
+
         </div>
 
         <!-- 開始日 -->
         <div class="form-group">
+
             <label>開始日</label>
 
-            <input type="date" name="startDate">
+            <input type="date" th:field="*{startDate}">
+
+            <div th:if="${#fields.hasErrors('startDate')}"
+                 th:errors="*{startDate}"
+                 class="error-message">
+            </div>
+
         </div>
 
         <!-- 終了日 -->
         <div class="form-group">
+
             <label>終了日</label>
 
-            <input type="date" name="endDate">
+            <input type="date" th:field="*{endDate}">
+
+            <div th:if="${#fields.hasErrors('endDate')}"
+                 th:errors="*{endDate}"
+                 class="error-message">
+            </div>
+
+            <div th:if="${#fields.hasErrors('validDateRange')}"
+                 th:errors="*{validDateRange}"
+                 class="error-message">
+            </div>
+
         </div>
 
         <!-- ボタン -->

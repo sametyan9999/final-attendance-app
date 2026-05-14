@@ -5,17 +5,20 @@ body {
     color: #222;
 }
 
+/* フォーム全体 */
 .container,
 .task-form-container {
     width: 68%;
     margin: 60px auto;
 }
 
+/* タイトル */
 h1 {
     font-size: 28px;
     margin-bottom: 20px;
 }
 
+/* 入力項目 */
 .form-group {
     margin-bottom: 18px;
 }
@@ -26,6 +29,7 @@ label {
     font-size: 14px;
 }
 
+/* 入力欄 */
 input[type="text"],
 input[type="date"],
 textarea {
@@ -42,11 +46,13 @@ textarea {
     resize: vertical;
 }
 
+/* ボタンエリア */
 .button-area,
 .button-group {
     margin-top: 20px;
 }
 
+/* 登録・更新ボタン */
 .update-btn,
 .save-btn {
     background-color: #0d6efd;
@@ -58,6 +64,7 @@ textarea {
     cursor: pointer;
 }
 
+/* キャンセルボタン */
 .cancel-btn {
     background-color: #6c757d;
     color: white;
@@ -66,4 +73,11 @@ textarea {
     text-decoration: none;
     font-weight: bold;
     margin-left: 5px;
+}
+
+/* エラーメッセージ */
+.error-message {
+    color: red;
+    margin-top: 5px;
+    font-size: 14px;
 }

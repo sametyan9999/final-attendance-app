@@ -3,7 +3,9 @@ package sample.thymeleaf.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.UserForm;
 
@@ -12,6 +14,7 @@ import jakarta.validation.Valid;
 import sample.common.dao.entity.Login;
 import sample.common.service.LoginService;
 
+// ログイン機能用Controller
 @Controller
 public class LoginController {
 
@@ -21,24 +24,21 @@ public class LoginController {
         this.userService = userService;
     }
 
-    // =========================
     // ログイン画面表示
-    // =========================
     @GetMapping("/login")
     public String showLogin(Model model) {
+
         model.addAttribute("userForm", new UserForm());
+
         return "login";
     }
 
-    // =========================
     // ログイン処理
-    // =========================
     @PostMapping("/login")
     public String login(
             @Valid @ModelAttribute("userForm") UserForm form,
             BindingResult result,
-            HttpSession session
-    ) {
+            HttpSession session) {
 
         // バリデーションエラー
         if (result.hasErrors()) {
@@ -60,21 +60,18 @@ public class LoginController {
             return "login";
         }
 
-        // ログイン成功 → セッション保存
+        // ログイン成功
         session.setAttribute("loginUser", user);
 
-        // タスク一覧へ
         return "redirect:/tasks";
     }
-    
- // =========================
- // ログアウト処理
- // =========================
- @GetMapping("/logout")
- public String logout(HttpSession session) {
 
-     session.invalidate();
+    // ログアウト処理
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
 
-     return "redirect:/login";
- }
+        session.invalidate();
+
+        return "redirect:/login";
+    }
 }

@@ -18,7 +18,8 @@ h1 {
 }
 
 /* ボタン共通 */
-.btn, .form-btn {
+.btn,
+.form-btn {
     display: inline-block;
     padding: 10px;
     border-radius: 8px;
@@ -40,11 +41,12 @@ h1 {
 }
 
 /* ホバー */
-.btn:hover, .form-btn:hover {
+.btn:hover,
+.form-btn:hover {
     opacity: 0.8;
 }
 
-/* 色 */
+/* ボタン色 */
 .register {
     background-color: green;
 }
@@ -63,11 +65,13 @@ h1 {
     border: 1px solid #ddd;
 }
 
+/* 入力項目 */
 .form-group {
     margin-bottom: 20px;
     text-align: left;
 }
 
+/* 入力欄 */
 input {
     width: 100%;
     padding: 10px;
@@ -76,12 +80,13 @@ input {
     border-radius: 5px;
 }
 
+/* リンク */
 .link {
     margin-top: 15px;
 }
 
-/* バリデーションメッセージ */
-.form-group p {
+/* エラーメッセージ */
+.error-message {
     color: red;
     font-size: 13px;
     margin-top: 5px;
