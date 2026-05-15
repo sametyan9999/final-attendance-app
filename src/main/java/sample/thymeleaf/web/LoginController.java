@@ -55,7 +55,7 @@ public class LoginController {
         }
 
         // パスワードチェック
-        if (!user.getPassword().equals(form.getPassword())) {
+        if (!userService.matches(form.getPassword(), user.getPassword())) {
             result.rejectValue("password", "", "パスワードが違います");
             return "login";
         }
