@@ -3,6 +3,7 @@ package sample.common.exception;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -16,6 +17,20 @@ public class GlobalExceptionHandler {
         model.addAttribute("message", e.getMessage());
 
         return "error/404";
+    }
+    
+ // パラメータ不正エラー
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public String handleTypeMismatch(
+            MethodArgumentTypeMismatchException e,
+            Model model) {
+
+        model.addAttribute(
+                "message",
+                "不正なリクエストです"
+        );
+
+        return "error/400";
     }
 
     // その他エラー

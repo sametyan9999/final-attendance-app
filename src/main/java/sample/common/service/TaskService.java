@@ -19,12 +19,11 @@ public class TaskService {
     }
 
     // ログインユーザーのタスク一覧取得
-    public List<Task> findByUsername(String username, int page) {
+    public List<Task> findByUsername(String username, int page, int size) {
 
-        int limit = 10;
-        int offset = (page - 1) * limit;
+        int offset = (page - 1) * size;
 
-        return taskMapper.findByUsername(username, limit, offset);
+        return taskMapper.findByUsername(username, size, offset);
     }
 
     // ログインユーザーのタスク件数取得

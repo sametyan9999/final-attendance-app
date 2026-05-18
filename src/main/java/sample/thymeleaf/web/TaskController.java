@@ -20,6 +20,8 @@ import sample.common.service.TaskService;
 @Controller
 public class TaskController {
 
+    private static final int PAGE_SIZE = 10;
+
     private final TaskService taskService;
 
     public TaskController(TaskService taskService) {
@@ -37,16 +39,26 @@ public class TaskController {
 
         String username = loginUser.getUsername();
 
-        int size = 10;
-
-        List<Task> list = taskService.findByUsername(username, page);
-
         int totalCount = taskService.countByUsername(username);
 
-        int totalPages = (int) Math.ceil((double) totalCount / size);
+        int totalPages = Math.max(
+                1,
+                (int) Math.ceil((double) totalCount / PAGE_SIZE)
+        );
+
+        int safePage = Math.min(
+                Math.max(page, 1),
+                totalPages
+        );
+
+        List<Task> list = taskService.findByUsername(
+                username,
+                safePage,
+                PAGE_SIZE
+        );
 
         model.addAttribute("tasks", list);
-        model.addAttribute("currentPage", page);
+        model.addAttribute("currentPage", safePage);
         model.addAttribute("totalPages", totalPages);
 
         return "tasks/list";
