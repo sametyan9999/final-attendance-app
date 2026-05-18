@@ -42,9 +42,14 @@ public class RegisterController {
             return "register";
         }
 
-        // ユーザー名重複チェック
+     // ユーザー登録失敗
         if (userService.existsByUsername(form.getUsername())) {
-            result.rejectValue("username", "", "このユーザー名はすでに使われています");
+
+            result.reject(
+                    "register.failed",
+                    "ユーザー登録に失敗しました"
+            );
+
             return "register";
         }
 

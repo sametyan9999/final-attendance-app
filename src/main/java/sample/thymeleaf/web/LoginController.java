@@ -48,15 +48,15 @@ public class LoginController {
         // ユーザー取得
         Login user = userService.findByUsername(form.getUsername());
 
-        // ユーザー存在チェック
-        if (user == null) {
-            result.rejectValue("username", "", "ユーザーが存在しません");
-            return "login";
-        }
+        // ログイン失敗
+        if (user == null ||
+            !userService.matches(form.getPassword(), user.getPassword())) {
 
-        // パスワードチェック
-        if (!userService.matches(form.getPassword(), user.getPassword())) {
-            result.rejectValue("password", "", "パスワードが違います");
+            result.reject(
+                    "login.failed",
+                    "ユーザー名またはパスワードが正しくありません"
+            );
+
             return "login";
         }
 
