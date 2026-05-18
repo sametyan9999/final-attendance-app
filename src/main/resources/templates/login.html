@@ -14,7 +14,7 @@
 
     <h1>ログイン</h1>
 
-    <form action="/login" method="post" th:object="${userForm}" novalidate>
+	<form th:action="@{/login}" method="post" th:object="${userForm}" novalidate>
 
         <div class="form-group">
             <label for="username">ユーザー名</label>

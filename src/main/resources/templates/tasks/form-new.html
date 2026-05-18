@@ -14,9 +14,9 @@
 
     <h1>タスク新規作成</h1>
 
-    <form action="/tasks"
-          method="post"
-          th:object="${task}">
+	<form th:action="@{/tasks}"
+	      method="post"
+	      th:object="${task}">
 
         <!-- タイトル -->
         <div class="form-group">
