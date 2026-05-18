@@ -54,9 +54,17 @@ public class TaskController {
 
     // タスク編集画面表示
     @GetMapping("/tasks/edit/{id}")
-    public String editTask(@PathVariable("id") Integer id, Model model) {
+    public String editTask(
+            @PathVariable("id") Integer id,
+            Model model,
+            HttpSession session) {
 
-        Task task = taskService.findById(id);
+        Login loginUser = (Login) session.getAttribute("loginUser");
+
+        Task task = taskService.findByIdForOwner(
+                id,
+                loginUser.getUsername()
+        );
 
         model.addAttribute("task", task);
 
@@ -100,7 +108,8 @@ public class TaskController {
             @PathVariable("id") Integer id,
             @Valid Task task,
             BindingResult result,
-            Model model) {
+            Model model,
+            HttpSession session) {
 
         task.setId(id);
 
@@ -110,16 +119,28 @@ public class TaskController {
             return "tasks/form-edit";
         }
 
-        taskService.update(task);
+        Login loginUser = (Login) session.getAttribute("loginUser");
+
+        taskService.updateForOwner(
+                task,
+                loginUser.getUsername()
+        );
 
         return "redirect:/tasks";
     }
 
     // タスク削除処理
     @PostMapping("/tasks/delete/{id}")
-    public String deleteTask(@PathVariable("id") Integer id) {
+    public String deleteTask(
+            @PathVariable("id") Integer id,
+            HttpSession session) {
 
-        taskService.delete(id);
+        Login loginUser = (Login) session.getAttribute("loginUser");
+
+        taskService.deleteForOwner(
+                id,
+                loginUser.getUsername()
+        );
 
         return "redirect:/tasks";
     }

@@ -46,7 +46,7 @@ public interface TaskMapper {
 	""")
 	int countByUsername(String username);
 
-    // IDで1件取得
+    // IDとユーザー名で1件取得
     @Select("""
         SELECT
             id,
@@ -60,8 +60,12 @@ public interface TaskMapper {
             updated_at AS updatedAt
         FROM tasks
         WHERE id = #{id}
+          AND username = #{username}
     """)
-    Task findById(Integer id);
+    Task findByIdAndUsername(
+            @Param("id") Integer id,
+            @Param("username") String username
+    );
 
     // タスク登録
     @Insert("""
@@ -90,24 +94,32 @@ public interface TaskMapper {
     """)
     void insert(Task task);
 
-    // タスク更新
+    // タスク更新（ログインユーザー本人のタスクだけ更新）
     @Update("""
         UPDATE tasks
         SET
-            title = #{title},
-            content = #{content},
-            name = #{name},
-            start_date = #{startDate},
-            end_date = #{endDate},
+            title = #{task.title},
+            content = #{task.content},
+            name = #{task.name},
+            start_date = #{task.startDate},
+            end_date = #{task.endDate},
             updated_at = CURRENT_TIMESTAMP
-        WHERE id = #{id}
+        WHERE id = #{task.id}
+          AND username = #{username}
     """)
-    void update(Task task);
+    int updateByOwner(
+            @Param("task") Task task,
+            @Param("username") String username
+    );
 
-    // タスク削除
+    // タスク削除（ログインユーザー本人のタスクだけ削除）
     @Delete("""
         DELETE FROM tasks
         WHERE id = #{id}
+          AND username = #{username}
     """)
-    void delete(Integer id);
+    int deleteByOwner(
+            @Param("id") Integer id,
+            @Param("username") String username
+    );
 }

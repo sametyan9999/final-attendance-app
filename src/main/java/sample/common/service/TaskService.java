@@ -31,10 +31,10 @@ public class TaskService {
         return taskMapper.countByUsername(username);
     }
 
-    // ID検索
-    public Task findById(Integer id) {
+    // ログインユーザー本人のタスク取得
+    public Task findByIdForOwner(Integer id, String username) {
 
-        return taskMapper.findById(id);
+        return taskMapper.findByIdAndUsername(id, username);
     }
 
     // 登録
@@ -43,15 +43,15 @@ public class TaskService {
         taskMapper.insert(task);
     }
 
-    // 更新
-    public void update(Task task) {
+    // ログインユーザー本人のタスク更新
+    public void updateForOwner(Task task, String username) {
 
-        taskMapper.update(task);
+        taskMapper.updateByOwner(task, username);
     }
 
-    // 削除
-    public void delete(Integer id) {
+    // ログインユーザー本人のタスク削除
+    public void deleteForOwner(Integer id, String username) {
 
-        taskMapper.delete(id);
+        taskMapper.deleteByOwner(id, username);
     }
 }
