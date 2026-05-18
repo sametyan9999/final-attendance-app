@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import sample.common.dao.entity.Task;
 import sample.common.dao.mapper.TaskMapper;
+import sample.thymeleaf.form.TaskForm;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,11 +20,18 @@ public class TaskService {
     }
 
     // ログインユーザーのタスク一覧取得
-    public List<Task> findByUsername(String username, int page, int size) {
+    public List<Task> findByUsername(
+            String username,
+            int page,
+            int size) {
 
         int offset = (page - 1) * size;
 
-        return taskMapper.findByUsername(username, size, offset);
+        return taskMapper.findByUsername(
+                username,
+                size,
+                offset
+        );
     }
 
     // ログインユーザーのタスク件数取得
@@ -33,29 +41,70 @@ public class TaskService {
     }
 
     // ログインユーザー本人のタスク取得
-    public Task findByIdForOwner(Integer id, String username) {
+    public Task findByIdForOwner(
+            Integer id,
+            String username) {
 
-        return taskMapper.findByIdAndUsername(id, username);
+        return taskMapper.findByIdAndUsername(
+                id,
+                username
+        );
     }
 
- // 登録
+    // 登録
     @Transactional
-    public void insert(Task task) {
+    public void insert(
+            TaskForm form,
+            String username) {
+
+        Task task = new Task();
+
+        task.setTitle(form.getTitle());
+        task.setContent(form.getContent());
+        task.setName(form.getName());
+        task.setStartDate(form.getStartDate());
+        task.setEndDate(form.getEndDate());
+
+        // ログインユーザーを設定
+        task.setUsername(username);
 
         taskMapper.insert(task);
     }
 
     // ログインユーザー本人のタスク更新
     @Transactional
-    public void updateForOwner(Task task, String username) {
+    public void updateForOwner(
+            Integer id,
+            TaskForm form,
+            String username) {
 
-        taskMapper.updateByOwner(task, username);
+        Task task = new Task();
+
+        task.setId(id);
+        task.setTitle(form.getTitle());
+        task.setContent(form.getContent());
+        task.setName(form.getName());
+        task.setStartDate(form.getStartDate());
+        task.setEndDate(form.getEndDate());
+
+        // ログインユーザー
+        task.setUsername(username);
+
+        taskMapper.updateByOwner(
+                task,
+                username
+        );
     }
 
     // ログインユーザー本人のタスク削除
     @Transactional
-    public void deleteForOwner(Integer id, String username) {
+    public void deleteForOwner(
+            Integer id,
+            String username) {
 
-        taskMapper.deleteByOwner(id, username);
+        taskMapper.deleteByOwner(
+                id,
+                username
+        );
     }
 }

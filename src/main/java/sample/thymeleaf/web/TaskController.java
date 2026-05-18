@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import jakarta.validation.Valid;
 import sample.common.dao.entity.Login;
 import sample.common.dao.entity.Task;
 import sample.common.service.TaskService;
+import sample.thymeleaf.form.TaskForm;
 
 // タスク管理用Controller
 @Controller
@@ -71,14 +73,23 @@ public class TaskController {
             Model model,
             HttpSession session) {
 
-        Login loginUser = (Login) session.getAttribute("loginUser");
+        Login loginUser =
+                (Login) session.getAttribute("loginUser");
 
         Task task = taskService.findByIdForOwner(
                 id,
                 loginUser.getUsername()
         );
 
-        model.addAttribute("task", task);
+        TaskForm form = new TaskForm();
+
+        form.setTitle(task.getTitle());
+        form.setContent(task.getContent());
+        form.setName(task.getName());
+        form.setStartDate(task.getStartDate());
+        form.setEndDate(task.getEndDate());
+
+        model.addAttribute("task", form);
 
         return "tasks/form-edit";
     }
@@ -87,7 +98,7 @@ public class TaskController {
     @GetMapping("/tasks/new")
     public String showNewForm(Model model) {
 
-        model.addAttribute("task", new Task());
+        model.addAttribute("task", new TaskForm());
 
         return "tasks/form-new";
     }
@@ -95,7 +106,7 @@ public class TaskController {
     // タスク新規登録処理
     @PostMapping("/tasks")
     public String createTask(
-            @Valid Task task,
+            @Valid @ModelAttribute("task") TaskForm form,
             BindingResult result,
             HttpSession session,
             Model model) {
@@ -105,11 +116,13 @@ public class TaskController {
             return "tasks/form-new";
         }
 
-        Login loginUser = (Login) session.getAttribute("loginUser");
+        Login loginUser =
+                (Login) session.getAttribute("loginUser");
 
-        task.setUsername(loginUser.getUsername());
-
-        taskService.insert(task);
+        taskService.insert(
+                form,
+                loginUser.getUsername()
+        );
 
         return "redirect:/tasks";
     }
@@ -118,23 +131,23 @@ public class TaskController {
     @PostMapping("/tasks/update/{id}")
     public String updateTask(
             @PathVariable("id") Integer id,
-            @Valid Task task,
+            @Valid @ModelAttribute("task") TaskForm form,
             BindingResult result,
             Model model,
             HttpSession session) {
 
-        task.setId(id);
-
         // バリデーションエラー
         if (result.hasErrors()) {
-            model.addAttribute("task", task);
+            model.addAttribute("task", form);
             return "tasks/form-edit";
         }
 
-        Login loginUser = (Login) session.getAttribute("loginUser");
+        Login loginUser =
+                (Login) session.getAttribute("loginUser");
 
         taskService.updateForOwner(
-                task,
+                id,
+                form,
                 loginUser.getUsername()
         );
 
@@ -147,7 +160,8 @@ public class TaskController {
             @PathVariable("id") Integer id,
             HttpSession session) {
 
-        Login loginUser = (Login) session.getAttribute("loginUser");
+        Login loginUser =
+                (Login) session.getAttribute("loginUser");
 
         taskService.deleteForOwner(
                 id,

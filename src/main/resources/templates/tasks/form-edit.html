@@ -63,41 +63,38 @@
         </div>
 
         <!-- 開始日 -->
-        <div class="form-group">
+		<!-- 開始日 -->
+		<div class="form-group">
 
-            <label>開始日</label>
+		    <label>開始日</label>
 
-            <input type="date"
-                   name="startDate"
-                   th:value="${task.startDate}">
+		    <input type="date" th:field="*{startDate}">
 
-            <div th:if="${#fields.hasErrors('startDate')}"
-                 th:errors="*{startDate}"
-                 class="error-message">
-            </div>
+		    <div th:if="${#fields.hasErrors('startDate')}"
+		         th:errors="*{startDate}"
+		         class="error-message">
+		    </div>
 
-        </div>
+		</div>
 
-        <!-- 終了日 -->
-        <div class="form-group">
+		<!-- 終了日 -->
+		<div class="form-group">
 
-            <label>終了日</label>
+		    <label>終了日</label>
 
-            <input type="date"
-                   name="endDate"
-                   th:value="${task.endDate}">
+		    <input type="date" th:field="*{endDate}">
 
-            <div th:if="${#fields.hasErrors('endDate')}"
-                 th:errors="*{endDate}"
-                 class="error-message">
-            </div>
+		    <div th:if="${#fields.hasErrors('endDate')}"
+		         th:errors="*{endDate}"
+		         class="error-message">
+		    </div>
 
-            <div th:if="${#fields.hasErrors('validDateRange')}"
-                 th:errors="*{validDateRange}"
-                 class="error-message">
-            </div>
+		    <div th:if="${#fields.hasErrors('validDateRange')}"
+		         th:errors="*{validDateRange}"
+		         class="error-message">
+		    </div>
 
-        </div>
+		</div>
 
         <!-- ボタン -->
         <div class="button-area">
