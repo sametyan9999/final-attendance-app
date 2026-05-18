@@ -3,11 +3,13 @@ package sample.common.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import sample.common.dao.entity.Task;
 import sample.common.dao.mapper.TaskMapper;
 
 @Service
+@Transactional(readOnly = true)
 public class TaskService {
 
     private final TaskMapper taskMapper;
@@ -37,19 +39,22 @@ public class TaskService {
         return taskMapper.findByIdAndUsername(id, username);
     }
 
-    // 登録
+ // 登録
+    @Transactional
     public void insert(Task task) {
 
         taskMapper.insert(task);
     }
 
     // ログインユーザー本人のタスク更新
+    @Transactional
     public void updateForOwner(Task task, String username) {
 
         taskMapper.updateByOwner(task, username);
     }
 
     // ログインユーザー本人のタスク削除
+    @Transactional
     public void deleteForOwner(Integer id, String username) {
 
         taskMapper.deleteByOwner(id, username);

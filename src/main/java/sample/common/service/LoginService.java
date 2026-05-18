@@ -1,6 +1,7 @@
 package sample.common.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.example.UserForm;
@@ -9,6 +10,7 @@ import sample.common.dao.entity.Login;
 import sample.common.dao.mapper.LoginMapper;
 
 @Service
+@Transactional(readOnly = true)
 public class LoginService {
 
     private final LoginMapper userMapper;
@@ -22,6 +24,7 @@ public class LoginService {
     }
 
  // ユーザー登録処理
+    @Transactional
     public void register(UserForm form) {
 
         Login user = new Login();
