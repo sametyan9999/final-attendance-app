@@ -62,13 +62,14 @@
 
         </div>
 
-        <!-- 開始日 -->
 		<!-- 開始日 -->
 		<div class="form-group">
 
-		    <label>開始日</label>
+		    <label for="startDate">開始日</label>
 
-		    <input type="date" th:field="*{startDate}">
+		    <input type="date"
+		           id="startDate"
+		           th:field="*{startDate}">
 
 		    <div th:if="${#fields.hasErrors('startDate')}"
 		         th:errors="*{startDate}"
@@ -80,9 +81,11 @@
 		<!-- 終了日 -->
 		<div class="form-group">
 
-		    <label>終了日</label>
+		    <label for="endDate">終了日</label>
 
-		    <input type="date" th:field="*{endDate}">
+		    <input type="date"
+		           id="endDate"
+		           th:field="*{endDate}">
 
 		    <div th:if="${#fields.hasErrors('endDate')}"
 		         th:errors="*{endDate}"
