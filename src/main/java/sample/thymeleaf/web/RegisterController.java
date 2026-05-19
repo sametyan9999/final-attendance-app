@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.UserForm;
-
 import jakarta.validation.Valid;
 import sample.common.service.LoginService;
+import sample.thymeleaf.form.UserForm;
 
 // ユーザー登録用Controller
 @Controller

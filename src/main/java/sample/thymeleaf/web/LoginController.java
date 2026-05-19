@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.UserForm;
-
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import sample.common.dao.entity.Login;
 import sample.common.service.LoginService;
+import sample.thymeleaf.form.UserForm;
 
 // ログイン機能用Controller
 @Controller

@@ -1,4 +1,4 @@
-package com.example;
+package sample.thymeleaf.form;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
