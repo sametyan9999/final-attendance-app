@@ -13,6 +13,8 @@ import sample.thymeleaf.form.TaskForm;
 @Transactional(readOnly = true)
 public class TaskService {
 
+    public static final int PAGE_SIZE = 10;
+
     private final TaskMapper taskMapper;
 
     public TaskService(TaskMapper taskMapper) {
@@ -51,7 +53,7 @@ public class TaskService {
         );
     }
 
-    // 登録
+    // タスク登録処理
     @Transactional
     public void insert(
             TaskForm form,
@@ -65,7 +67,7 @@ public class TaskService {
         task.setStartDate(form.getStartDate());
         task.setEndDate(form.getEndDate());
 
-        // ログインユーザーを設定
+        // セッション中のログインユーザーを登録者として設定する
         task.setUsername(username);
 
         taskMapper.insert(task);
@@ -87,7 +89,8 @@ public class TaskService {
         task.setStartDate(form.getStartDate());
         task.setEndDate(form.getEndDate());
 
-        // ログインユーザー
+        // 他ユーザーのタスク更新を防ぐため、
+        // ログインユーザー名を条件に含める
         task.setUsername(username);
 
         taskMapper.updateByOwner(

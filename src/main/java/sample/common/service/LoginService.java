@@ -23,7 +23,7 @@ public class LoginService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // ユーザー登録処理
+    // 登録時は平文パスワードを保存しないよう、ハッシュ化してからDBへ登録する
     @Transactional
     public void register(UserForm form) {
 
@@ -31,7 +31,6 @@ public class LoginService {
 
         user.setUsername(form.getUsername());
 
-        // パスワードをハッシュ化して保存
         user.setPassword(
                 passwordEncoder.encode(form.getPassword())
         );
@@ -39,19 +38,19 @@ public class LoginService {
         loginMapper.insert(user);
     }
 
-    // ユーザー取得
+    // ログイン認証時に、入力されたユーザー名に対応する情報を取得する
     public Login findByUsername(String username) {
 
         return loginMapper.findByUsername(username);
     }
 
-    // ユーザー名が存在するか確認
+    // 同じユーザー名の重複登録を防ぐために存在確認を行う
     public boolean existsByUsername(String username) {
 
         return loginMapper.findByUsername(username) != null;
     }
 
-    // パスワード照合処理
+    // 入力されたパスワードと、DBに保存されたハッシュ値を照合する
     public boolean matches(
             String rawPassword,
             String hashedPassword) {

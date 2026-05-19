@@ -17,10 +17,10 @@ import sample.thymeleaf.form.UserForm;
 @Controller
 public class LoginController {
 
-    private final LoginService userService;
+    private final LoginService loginService;
 
-    public LoginController(LoginService userService) {
-        this.userService = userService;
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
     }
 
     // ログイン画面表示
@@ -39,17 +39,22 @@ public class LoginController {
             BindingResult result,
             HttpSession session) {
 
-        // バリデーションエラー
+        // 入力エラー時は入力内容を保持したまま再表示する
         if (result.hasErrors()) {
             return "login";
         }
 
-        // ユーザー取得
-        Login user = userService.findByUsername(form.getUsername());
+        Login user = loginService.findByUsername(
+                form.getUsername()
+        );
 
-        // ログイン失敗
+        // ユーザー存在有無を判別できないよう、
+        // エラーメッセージは統一する
         if (user == null ||
-            !userService.matches(form.getPassword(), user.getPassword())) {
+            !loginService.matches(
+                    form.getPassword(),
+                    user.getPassword()
+            )) {
 
             result.reject(
                     "login.failed",
@@ -59,7 +64,7 @@ public class LoginController {
             return "login";
         }
 
-        // ログイン成功
+        // セッションへ保存してログイン状態を保持する
         session.setAttribute("loginUser", user);
 
         return "redirect:/tasks";
@@ -69,6 +74,7 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
 
+        // セッションを破棄してログイン状態を削除する
         session.invalidate();
 
         return "redirect:/login";

@@ -18,9 +18,12 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
             HttpServletResponse response,
             Object handler) throws IOException {
 
+        // ログイン済みユーザーのみ
+        // タスク画面へアクセスできるようにするため、
+        // セッションに loginUser が存在するか確認する
         HttpSession session = request.getSession(false);
 
-        // 未ログイン
+        // 未ログインの場合はログイン画面へリダイレクト
         if (session == null ||
             session.getAttribute("loginUser") == null) {
 

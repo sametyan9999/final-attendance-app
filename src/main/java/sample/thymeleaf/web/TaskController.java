@@ -18,11 +18,8 @@ import sample.common.dao.entity.Task;
 import sample.common.service.TaskService;
 import sample.thymeleaf.form.TaskForm;
 
-// タスク管理用Controller
 @Controller
 public class TaskController {
-
-    private static final int PAGE_SIZE = 10;
 
     private final TaskService taskService;
 
@@ -30,7 +27,6 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    // タスク一覧表示
     @GetMapping("/tasks")
     public String showTasks(
             @RequestParam(name = "page", defaultValue = "1") int page,
@@ -45,9 +41,11 @@ public class TaskController {
 
         int totalPages = Math.max(
                 1,
-                (int) Math.ceil((double) totalCount / PAGE_SIZE)
+                (int) Math.ceil((double) totalCount / TaskService.PAGE_SIZE)
         );
 
+        // URLに不正なページ番号が指定されても、
+        // 1ページ目から最終ページの範囲に収める
         int safePage = Math.min(
                 Math.max(page, 1),
                 totalPages
@@ -56,7 +54,7 @@ public class TaskController {
         List<Task> list = taskService.findByUsername(
                 username,
                 safePage,
-                PAGE_SIZE
+                TaskService.PAGE_SIZE
         );
 
         model.addAttribute("tasks", list);
@@ -66,7 +64,6 @@ public class TaskController {
         return "tasks/list";
     }
 
-    // タスク編集画面表示
     @GetMapping("/tasks/edit/{id}")
     public String editTask(
             @PathVariable("id") Integer id,
@@ -81,6 +78,8 @@ public class TaskController {
                 loginUser.getUsername()
         );
 
+        // 画面入力用のTaskFormに詰め替え、
+        // DB Entityを直接フォームに渡さないようにする
         TaskForm form = new TaskForm();
 
         form.setTitle(task.getTitle());
@@ -94,7 +93,6 @@ public class TaskController {
         return "tasks/form-edit";
     }
 
-    // タスク新規作成画面表示
     @GetMapping("/tasks/new")
     public String showNewForm(Model model) {
 
@@ -103,7 +101,6 @@ public class TaskController {
         return "tasks/form-new";
     }
 
-    // タスク新規登録処理
     @PostMapping("/tasks")
     public String createTask(
             @Valid @ModelAttribute("task") TaskForm form,
@@ -111,7 +108,7 @@ public class TaskController {
             HttpSession session,
             Model model) {
 
-        // バリデーションエラー
+        // 入力エラー時は、入力内容とエラーメッセージを保持したまま再表示する
         if (result.hasErrors()) {
             return "tasks/form-new";
         }
@@ -127,7 +124,6 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-    // タスク更新処理
     @PostMapping("/tasks/update/{id}")
     public String updateTask(
             @PathVariable("id") Integer id,
@@ -136,7 +132,7 @@ public class TaskController {
             Model model,
             HttpSession session) {
 
-        // バリデーションエラー
+        // 入力エラー時は、編集画面へ戻してユーザーに修正してもらう
         if (result.hasErrors()) {
             model.addAttribute("task", form);
             return "tasks/form-edit";
@@ -154,7 +150,6 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-    // タスク削除処理
     @PostMapping("/tasks/delete/{id}")
     public String deleteTask(
             @PathVariable("id") Integer id,

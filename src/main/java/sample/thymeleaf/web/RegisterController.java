@@ -15,10 +15,10 @@ import sample.thymeleaf.form.UserForm;
 @Controller
 public class RegisterController {
 
-    private final LoginService userService;
+    private final LoginService loginService;
 
-    public RegisterController(LoginService userService) {
-        this.userService = userService;
+    public RegisterController(LoginService loginService) {
+        this.loginService = loginService;
     }
 
     // ユーザー登録画面表示
@@ -36,13 +36,15 @@ public class RegisterController {
             @Valid @ModelAttribute("userForm") UserForm form,
             BindingResult result) {
 
-        // バリデーションエラー
+        // 入力エラー時は入力内容を保持したまま再表示する
         if (result.hasErrors()) {
             return "register";
         }
 
-     // ユーザー登録失敗
-        if (userService.existsByUsername(form.getUsername())) {
+        // 登録済みユーザー名との重複を防ぐ
+        if (loginService.existsByUsername(
+                form.getUsername()
+        )) {
 
             result.reject(
                     "register.failed",
@@ -52,8 +54,7 @@ public class RegisterController {
             return "register";
         }
 
-        // ユーザー登録
-        userService.register(form);
+        loginService.register(form);
 
         return "redirect:/register/complete";
     }
