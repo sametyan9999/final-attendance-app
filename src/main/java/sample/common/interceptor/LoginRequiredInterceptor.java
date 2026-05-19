@@ -12,26 +12,23 @@ import jakarta.servlet.http.HttpSession;
 @Component
 public class LoginRequiredInterceptor implements HandlerInterceptor {
 
-    @Override
-    public boolean preHandle(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Object handler) throws IOException {
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws IOException {
 
-        // ログイン済みユーザーのみ
-        // タスク画面へアクセスできるようにするため、
-        // セッションに loginUser が存在するか確認する
-        HttpSession session = request.getSession(false);
+		// ログイン済みユーザーのみ
+		// タスク画面へアクセスできるようにするため、
+		// セッションに loginUser が存在するか確認する
+		HttpSession session = request.getSession(false);
 
-        // 未ログインの場合はログイン画面へリダイレクト
-        if (session == null ||
-            session.getAttribute("loginUser") == null) {
+		// 未ログインの場合はログイン画面へリダイレクト
+		if (session == null || session.getAttribute("loginUser") == null) {
 
-            response.sendRedirect("/login");
+			response.sendRedirect("/login");
 
-            return false;
-        }
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

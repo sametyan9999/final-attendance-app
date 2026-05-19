@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    // TOP画面表示
-    @GetMapping("/")
-    public String home() {
-        return "homePage";
-    }
+	// TOP画面表示
+	@GetMapping("/")
+	public String home() {
+		return "homePage";
+	}
 }

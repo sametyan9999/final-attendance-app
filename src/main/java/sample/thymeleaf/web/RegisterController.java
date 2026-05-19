@@ -15,54 +15,47 @@ import sample.thymeleaf.form.UserForm;
 @Controller
 public class RegisterController {
 
-    private final LoginService loginService;
+	private final LoginService loginService;
 
-    public RegisterController(LoginService loginService) {
-        this.loginService = loginService;
-    }
+	public RegisterController(LoginService loginService) {
+		this.loginService = loginService;
+	}
 
-    // ユーザー登録画面表示
-    @GetMapping("/register")
-    public String showRegisterForm(Model model) {
+	// ユーザー登録画面表示
+	@GetMapping("/register")
+	public String showRegisterForm(Model model) {
 
-        model.addAttribute("userForm", new UserForm());
+		model.addAttribute("userForm", new UserForm());
 
-        return "register";
-    }
+		return "register";
+	}
 
-    // ユーザー登録処理
-    @PostMapping("/register")
-    public String register(
-            @Valid @ModelAttribute("userForm") UserForm form,
-            BindingResult result) {
+	// ユーザー登録処理
+	@PostMapping("/register")
+	public String register(@Valid @ModelAttribute("userForm") UserForm form, BindingResult result) {
 
-        // 入力エラー時は入力内容を保持したまま再表示する
-        if (result.hasErrors()) {
-            return "register";
-        }
+		// 入力エラー時は入力内容を保持したまま再表示する
+		if (result.hasErrors()) {
+			return "register";
+		}
 
-        // 登録済みユーザー名との重複を防ぐ
-        if (loginService.existsByUsername(
-                form.getUsername()
-        )) {
+		// 登録済みユーザー名との重複を防ぐ
+		if (loginService.existsByUsername(form.getUsername())) {
 
-            result.reject(
-                    "register.failed",
-                    "ユーザー登録に失敗しました"
-            );
+			result.reject("register.failed", "ユーザー登録に失敗しました");
 
-            return "register";
-        }
+			return "register";
+		}
 
-        loginService.register(form);
+		loginService.register(form);
 
-        return "redirect:/register/complete";
-    }
+		return "redirect:/register/complete";
+	}
 
-    // 登録完了画面表示
-    @GetMapping("/register/complete")
-    public String showRegisterComplete() {
+	// 登録完了画面表示
+	@GetMapping("/register/complete")
+	public String showRegisterComplete() {
 
-        return "register-complete";
-    }
+		return "register-complete";
+	}
 }

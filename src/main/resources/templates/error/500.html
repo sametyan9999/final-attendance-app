@@ -2,27 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>500 Error</title>
+	<meta charset="UTF-8">
+	<title>500 Error</title>
 
-    <link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
 
-<div class="form-container">
+	<div class="form-container">
 
-    <h1>500 Error</h1>
+		<h1>500 Error</h1>
 
-    <p th:text="${message}">
-        予期しないエラーが発生しました。
-    </p>
+		<p th:text="${message}">
+			予期しないエラーが発生しました。
+		</p>
 
-    <a href="/tasks" class="btn login">
-        タスク一覧へ戻る
-    </a>
+		<a href="/tasks" class="btn login">
+			タスク一覧へ戻る
+		</a>
 
-</div>
+	</div>
 
 </body>
+
 </html>

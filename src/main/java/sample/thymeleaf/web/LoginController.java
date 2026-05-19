@@ -17,66 +17,54 @@ import sample.thymeleaf.form.UserForm;
 @Controller
 public class LoginController {
 
-    private final LoginService loginService;
+	private final LoginService loginService;
 
-    public LoginController(LoginService loginService) {
-        this.loginService = loginService;
-    }
+	public LoginController(LoginService loginService) {
+		this.loginService = loginService;
+	}
 
-    // ログイン画面表示
-    @GetMapping("/login")
-    public String showLogin(Model model) {
+	// ログイン画面表示
+	@GetMapping("/login")
+	public String showLogin(Model model) {
 
-        model.addAttribute("userForm", new UserForm());
+		model.addAttribute("userForm", new UserForm());
 
-        return "login";
-    }
+		return "login";
+	}
 
-    // ログイン処理
-    @PostMapping("/login")
-    public String login(
-            @Valid @ModelAttribute("userForm") UserForm form,
-            BindingResult result,
-            HttpSession session) {
+	// ログイン処理
+	@PostMapping("/login")
+	public String login(@Valid @ModelAttribute("userForm") UserForm form, BindingResult result, HttpSession session) {
 
-        // 入力エラー時は入力内容を保持したまま再表示する
-        if (result.hasErrors()) {
-            return "login";
-        }
+		// 入力エラー時は入力内容を保持したまま再表示する
+		if (result.hasErrors()) {
+			return "login";
+		}
 
-        Login user = loginService.findByUsername(
-                form.getUsername()
-        );
+		Login user = loginService.findByUsername(form.getUsername());
 
-        // ユーザー存在有無を判別できないよう、
-        // エラーメッセージは統一する
-        if (user == null ||
-            !loginService.matches(
-                    form.getPassword(),
-                    user.getPassword()
-            )) {
+		// ユーザー存在有無を判別できないよう、
+		// エラーメッセージは統一する
+		if (user == null || !loginService.matches(form.getPassword(), user.getPassword())) {
 
-            result.reject(
-                    "login.failed",
-                    "ユーザー名またはパスワードが正しくありません"
-            );
+			result.reject("login.failed", "ユーザー名またはパスワードが正しくありません");
 
-            return "login";
-        }
+			return "login";
+		}
 
-        // セッションへ保存してログイン状態を保持する
-        session.setAttribute("loginUser", user);
+		// セッションへ保存してログイン状態を保持する
+		session.setAttribute("loginUser", user);
 
-        return "redirect:/tasks";
-    }
+		return "redirect:/tasks";
+	}
 
-    // ログアウト処理
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
+	// ログアウト処理
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
 
-        // セッションを破棄してログイン状態を削除する
-        session.invalidate();
+		// セッションを破棄してログイン状態を削除する
+		session.invalidate();
 
-        return "redirect:/login";
-    }
+		return "redirect:/login";
+	}
 }

@@ -15,117 +15,90 @@ import sample.thymeleaf.form.TaskForm;
 @Transactional(readOnly = true)
 public class TaskService {
 
-    public static final int PAGE_SIZE = 10;
+	public static final int PAGE_SIZE = 10;
 
-    private final TaskMapper taskMapper;
-    private final Clock clock;
+	private final TaskMapper taskMapper;
+	private final Clock clock;
 
-    public TaskService(
-            TaskMapper taskMapper,
-            Clock clock) {
+	public TaskService(TaskMapper taskMapper, Clock clock) {
 
-        this.taskMapper = taskMapper;
-        this.clock = clock;
-    }
+		this.taskMapper = taskMapper;
+		this.clock = clock;
+	}
 
-    // ログインユーザーのタスク一覧取得
-    public List<Task> findByUsername(
-            String username,
-            int page,
-            int size) {
+	// ログインユーザーのタスク一覧取得
+	public List<Task> findByUsername(String username, int page, int size) {
 
-        int offset = (page - 1) * size;
+		int offset = (page - 1) * size;
 
-        return taskMapper.findByUsername(
-                username,
-                size,
-                offset
-        );
-    }
+		return taskMapper.findByUsername(username, size, offset);
+	}
 
-    // ログインユーザーのタスク件数取得
-    public int countByUsername(String username) {
+	// ログインユーザーのタスク件数取得
+	public int countByUsername(String username) {
 
-        return taskMapper.countByUsername(username);
-    }
+		return taskMapper.countByUsername(username);
+	}
 
-    // ログインユーザー本人のタスク取得
-    public Task findByIdForOwner(
-            Integer id,
-            String username) {
+	// ログインユーザー本人のタスク取得
+	public Task findByIdForOwner(Integer id, String username) {
 
-        return taskMapper.findByIdAndUsername(
-                id,
-                username
-        );
-    }
+		return taskMapper.findByIdAndUsername(id, username);
+	}
 
-    // タスク登録処理
-    @Transactional
-    public void insert(
-            TaskForm form,
-            String username) {
+	// タスク登録処理
+	@Transactional
+	public void insert(TaskForm form, String username) {
 
-        LocalDateTime now = LocalDateTime.now(clock);
+		LocalDateTime now = LocalDateTime.now(clock);
 
-        Task task = new Task();
+		Task task = new Task();
 
-        task.setTitle(form.getTitle());
-        task.setContent(form.getContent());
-        task.setName(form.getName());
-        task.setStartDate(form.getStartDate());
-        task.setEndDate(form.getEndDate());
+		task.setTitle(form.getTitle());
+		task.setContent(form.getContent());
+		task.setName(form.getName());
+		task.setStartDate(form.getStartDate());
+		task.setEndDate(form.getEndDate());
 
-        // セッション中のログインユーザーを登録者として設定する
-        task.setUsername(username);
+		// セッション中のログインユーザーを登録者として設定する
+		task.setUsername(username);
 
-        // アプリ側で時刻を設定する
-        task.setCreatedAt(now);
-        task.setUpdatedAt(now);
+		// アプリ側で時刻を設定する
+		task.setCreatedAt(now);
+		task.setUpdatedAt(now);
 
-        taskMapper.insert(task);
-    }
+		taskMapper.insert(task);
+	}
 
-    // ログインユーザー本人のタスク更新
-    @Transactional
-    public void updateForOwner(
-            Integer id,
-            TaskForm form,
-            String username) {
+	// ログインユーザー本人のタスク更新
+	@Transactional
+	public void updateForOwner(Integer id, TaskForm form, String username) {
 
-        LocalDateTime now = LocalDateTime.now(clock);
+		LocalDateTime now = LocalDateTime.now(clock);
 
-        Task task = new Task();
+		Task task = new Task();
 
-        task.setId(id);
-        task.setTitle(form.getTitle());
-        task.setContent(form.getContent());
-        task.setName(form.getName());
-        task.setStartDate(form.getStartDate());
-        task.setEndDate(form.getEndDate());
+		task.setId(id);
+		task.setTitle(form.getTitle());
+		task.setContent(form.getContent());
+		task.setName(form.getName());
+		task.setStartDate(form.getStartDate());
+		task.setEndDate(form.getEndDate());
 
-        // 他ユーザーのタスク更新を防ぐため、
-        // ログインユーザー名を条件に含める
-        task.setUsername(username);
+		// 他ユーザーのタスク更新を防ぐため、
+		// ログインユーザー名を条件に含める
+		task.setUsername(username);
 
-        // 更新日時をアプリ側で設定する
-        task.setUpdatedAt(now);
+		// 更新日時をアプリ側で設定する
+		task.setUpdatedAt(now);
 
-        taskMapper.updateByOwner(
-                task,
-                username
-        );
-    }
+		taskMapper.updateByOwner(task, username);
+	}
 
-    // ログインユーザー本人のタスク削除
-    @Transactional
-    public void deleteForOwner(
-            Integer id,
-            String username) {
+	// ログインユーザー本人のタスク削除
+	@Transactional
+	public void deleteForOwner(Integer id, String username) {
 
-        taskMapper.deleteByOwner(
-                id,
-                username
-        );
-    }
+		taskMapper.deleteByOwner(id, username);
+	}
 }

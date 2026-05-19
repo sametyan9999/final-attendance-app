@@ -9,17 +9,13 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	@Bean
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-            .authorizeHttpRequests(a -> a.anyRequest().permitAll())
-            .csrf(c -> c.csrfTokenRepository(
-                    CookieCsrfTokenRepository.withHttpOnlyFalse()
-            ))
-            .formLogin(f -> f.disable())
-            .httpBasic(b -> b.disable());
+		http.authorizeHttpRequests(a -> a.anyRequest().permitAll())
+				.csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+				.formLogin(f -> f.disable()).httpBasic(b -> b.disable());
 
-        return http.build();
-    }
+		return http.build();
+	}
 }

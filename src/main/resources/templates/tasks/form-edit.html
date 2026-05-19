@@ -57,10 +57,7 @@
 
 				<label for="startDate">開始日</label>
 
-				<input
-					type="date"
-					id="startDate"
-					name="startDate"
+				<input type="date" id="startDate" name="startDate"
 					th:value="${#temporals.format(task.startDate, 'yyyy-MM-dd')}">
 
 				<div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error-message">
@@ -73,10 +70,7 @@
 
 				<label for="endDate">終了日</label>
 
-				<input
-					type="date"
-					id="endDate"
-					name="endDate"
+				<input type="date" id="endDate" name="endDate"
 					th:value="${#temporals.format(task.endDate, 'yyyy-MM-dd')}">
 
 				<div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="error-message">

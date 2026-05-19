@@ -3,33 +3,33 @@ package sample.common.dao.entity;
 // ログインユーザー情報を保持するEntity
 public class Login {
 
-    private Integer id;
-    private String username;
-    private String password;
+	private Integer id;
+	private String username;
+	private String password;
 
-    // getter
-    public Integer getId() {
-        return id;
-    }
+	// getter
+	public Integer getId() {
+		return id;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    // setter
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	// setter
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

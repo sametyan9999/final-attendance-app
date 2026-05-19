@@ -75,15 +75,13 @@
 				<!-- 削除 -->
 				<form th:action="@{/tasks/delete/{id}(id=${task.id})}" method="post">
 
-				    <!-- CSRFトークン -->
-				    <input type="hidden"
-				           th:if="${_csrf != null}"
-				           th:name="${_csrf.parameterName}"
-				           th:value="${_csrf.token}">
+					<!-- CSRFトークン -->
+					<input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}">
 
-				    <button type="submit" class="delete-btn">
-				        削除
-				    </button>
+					<button type="submit" class="delete-btn">
+						削除
+					</button>
 
 				</form>
 

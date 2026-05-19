@@ -10,13 +10,12 @@ import sample.common.interceptor.LoginRequiredInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Autowired
-    private LoginRequiredInterceptor interceptor;
+	@Autowired
+	private LoginRequiredInterceptor interceptor;
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(interceptor)
-                .addPathPatterns("/tasks/**");
-    }
+		registry.addInterceptor(interceptor).addPathPatterns("/tasks/**");
+	}
 }

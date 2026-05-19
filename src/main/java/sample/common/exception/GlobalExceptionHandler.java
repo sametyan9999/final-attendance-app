@@ -9,56 +9,39 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // タスク未検出エラー
-    @ExceptionHandler(TaskNotFoundException.class)
-    public String handleTaskNotFound(
-            TaskNotFoundException e,
-            Model model) {
+	// タスク未検出エラー
+	@ExceptionHandler(TaskNotFoundException.class)
+	public String handleTaskNotFound(TaskNotFoundException e, Model model) {
 
-        model.addAttribute("message", e.getMessage());
+		model.addAttribute("message", e.getMessage());
 
-        return "error/404";
-    }
-    
- // パラメータ不正エラー
- // 存在しないURLアクセス
-    @ExceptionHandler(NoResourceFoundException.class)
-    public String handleNoResource(
-            NoResourceFoundException e,
-            Model model) {
+		return "error/404";
+	}
 
-        model.addAttribute(
-                "message",
-                "ページが見つかりません"
-        );
+	// パラメータ不正エラー
+	// 存在しないURLアクセス
+	@ExceptionHandler(NoResourceFoundException.class)
+	public String handleNoResource(NoResourceFoundException e, Model model) {
 
-        return "error/404";
-    }
-    
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public String handleTypeMismatch(
-            MethodArgumentTypeMismatchException e,
-            Model model) {
+		model.addAttribute("message", "ページが見つかりません");
 
-        model.addAttribute(
-                "message",
-                "不正なリクエストです"
-        );
+		return "error/404";
+	}
 
-        return "error/400";
-    }
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public String handleTypeMismatch(MethodArgumentTypeMismatchException e, Model model) {
 
-    // その他エラー
-    @ExceptionHandler(Exception.class)
-    public String handleException(
-            Exception e,
-            Model model) {
+		model.addAttribute("message", "不正なリクエストです");
 
-        model.addAttribute(
-                "message",
-                "予期しないエラーが発生しました"
-        );
+		return "error/400";
+	}
 
-        return "error/500";
-    }
+	// その他エラー
+	@ExceptionHandler(Exception.class)
+	public String handleException(Exception e, Model model) {
+
+		model.addAttribute("message", "予期しないエラーが発生しました");
+
+		return "error/500";
+	}
 }

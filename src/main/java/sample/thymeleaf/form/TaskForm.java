@@ -9,81 +9,81 @@ import jakarta.validation.constraints.Size;
 
 public class TaskForm {
 
-    private Integer id;
+	private Integer id;
 
-    @NotBlank(message = "タイトルを入力してください")
-    @Size(max = 255, message = "タイトルは255文字以内で入力してください")
-    private String title;
+	@NotBlank(message = "タイトルを入力してください")
+	@Size(max = 255, message = "タイトルは255文字以内で入力してください")
+	private String title;
 
-    @NotBlank(message = "内容を入力してください")
-    @Size(max = 2000, message = "内容は2000文字以内で入力してください")
-    private String content;
+	@NotBlank(message = "内容を入力してください")
+	@Size(max = 2000, message = "内容は2000文字以内で入力してください")
+	private String content;
 
-    @NotBlank(message = "登録者を入力してください")
-    @Size(max = 100, message = "登録者は100文字以内で入力してください")
-    private String name;
+	@NotBlank(message = "登録者を入力してください")
+	@Size(max = 100, message = "登録者は100文字以内で入力してください")
+	private String name;
 
-    @NotNull(message = "開始日を入力してください")
-    private LocalDate startDate;
+	@NotNull(message = "開始日を入力してください")
+	private LocalDate startDate;
 
-    @NotNull(message = "終了日を入力してください")
-    private LocalDate endDate;
+	@NotNull(message = "終了日を入力してください")
+	private LocalDate endDate;
 
-    @AssertTrue(message = "終了日は開始日以降を入力してください")
-    public boolean isValidDateRange() {
+	@AssertTrue(message = "終了日は開始日以降を入力してください")
+	public boolean isValidDateRange() {
 
-        if (startDate == null || endDate == null) {
-            return true;
-        }
+		if (startDate == null || endDate == null) {
+			return true;
+		}
 
-        return !startDate.isAfter(endDate);
-    }
+		return !startDate.isAfter(endDate);
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
+	public LocalDate getStartDate() {
+		return startDate;
+	}
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
 
-    public LocalDate getEndDate() {
-        return endDate;
-    }
+	public LocalDate getEndDate() {
+		return endDate;
+	}
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
 }
