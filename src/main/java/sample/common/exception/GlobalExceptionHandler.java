@@ -1,6 +1,7 @@
 package sample.common.exception;
 
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -20,6 +21,20 @@ public class GlobalExceptionHandler {
     }
     
  // パラメータ不正エラー
+ // 存在しないURLアクセス
+    @ExceptionHandler(NoResourceFoundException.class)
+    public String handleNoResource(
+            NoResourceFoundException e,
+            Model model) {
+
+        model.addAttribute(
+                "message",
+                "ページが見つかりません"
+        );
+
+        return "error/404";
+    }
+    
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public String handleTypeMismatch(
             MethodArgumentTypeMismatchException e,
