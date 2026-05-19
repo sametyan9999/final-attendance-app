@@ -2,51 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>ユーザー登録</title>
+	<meta charset="UTF-8">
+	<title>ユーザー登録</title>
 
-    <link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
 
-<div class="form-container">
+	<div class="form-container">
 
-    <h1>ユーザー登録</h1>
+		<h1>ユーザー登録</h1>
 
-	<form th:action="@{/register}" method="post" th:object="${userForm}" novalidate>
+		<form th:action="@{/register}" method="post" th:object="${userForm}" novalidate>
 
-        <div class="form-group">
+			<div class="form-group">
 
-            <label>ユーザー名（半角英字）</label>
+				<label>ユーザー名（半角英字）</label>
 
-            <input type="text" th:field="*{username}">
+				<input type="text" th:field="*{username}">
 
-            <p th:errors="*{username}" class="error-message"></p>
+				<p th:errors="*{username}" class="error-message">
+				</p>
 
-        </div>
+			</div>
 
-        <div class="form-group">
+			<div class="form-group">
 
-            <label>パスワード（半角英数字）</label>
+				<label>パスワード（半角英数字）</label>
 
-            <input type="password" th:field="*{password}">
+				<input type="password" th:field="*{password}">
 
-            <p th:errors="*{password}" class="error-message"></p>
+				<p th:errors="*{password}" class="error-message">
+				</p>
 
-        </div>
+			</div>
 
-        <button type="submit" class="form-btn register">
-            登録
-        </button>
+			<!-- CSRFトークン -->
+			<input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-    </form>
+			<button type="submit" class="form-btn register">
 
-    <p class="link">
-        <a href="/login">ログインはこちら</a>
-    </p>
+				登録
 
-</div>
+			</button>
+
+		</form>
+
+		<p class="link">
+			<a href="/login">ログインはこちら</a>
+		</p>
+
+	</div>
 
 </body>
+
 </html>

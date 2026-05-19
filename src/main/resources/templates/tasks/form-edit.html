@@ -2,119 +2,103 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>タスク編集</title>
+	<meta charset="UTF-8">
+	<title>タスク編集</title>
 
-    <link rel="stylesheet" href="/css/task-form.css">
+	<link rel="stylesheet" href="/css/task-form.css">
 </head>
 
 <body>
 
-<div class="container">
+	<div class="container">
 
-    <h1>タスク編集</h1>
+		<h1>タスク編集</h1>
 
-    <form th:action="@{/tasks/update/{id}(id=${task.id})}"
-          method="post"
-          th:object="${task}">
+		<form th:action="@{/tasks/update/{id}(id=${task.id})}" method="post" th:object="${task}">
 
-        <!-- タイトル -->
-        <div class="form-group">
+			<!-- タイトル -->
+			<div class="form-group">
 
-            <label>タイトル</label>
+				<label>タイトル</label>
 
-            <input type="text" th:field="*{title}">
+				<input type="text" th:field="*{title}">
 
-            <div th:if="${#fields.hasErrors('title')}"
-                 th:errors="*{title}"
-                 class="error-message">
-            </div>
+				<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-message">
+				</div>
 
-        </div>
+			</div>
 
-        <!-- 内容 -->
-        <div class="form-group">
+			<!-- 内容 -->
+			<div class="form-group">
 
-            <label>内容</label>
+				<label>内容</label>
 
-            <textarea rows="5"
-                      th:field="*{content}">
-            </textarea>
+				<textarea rows="5" th:field="*{content}"></textarea>
 
-            <div th:if="${#fields.hasErrors('content')}"
-                 th:errors="*{content}"
-                 class="error-message">
-            </div>
+				<div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error-message">
+				</div>
 
-        </div>
+			</div>
 
-        <!-- 登録者 -->
-        <div class="form-group">
+			<!-- 登録者 -->
+			<div class="form-group">
 
-            <label>登録者</label>
+				<label>登録者</label>
 
-            <input type="text" th:field="*{name}">
+				<input type="text" th:field="*{name}">
 
-            <div th:if="${#fields.hasErrors('name')}"
-                 th:errors="*{name}"
-                 class="error-message">
-            </div>
+				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-message">
+				</div>
 
-        </div>
+			</div>
 
-		<!-- 開始日 -->
-		<div class="form-group">
+			<!-- 開始日 -->
+			<div class="form-group">
 
-		    <label for="startDate">開始日</label>
+				<label for="startDate">開始日</label>
 
-		    <input type="date"
-		           id="startDate"
-		           th:field="*{startDate}">
+				<input type="date" id="startDate" th:field="*{startDate}">
 
-		    <div th:if="${#fields.hasErrors('startDate')}"
-		         th:errors="*{startDate}"
-		         class="error-message">
-		    </div>
+				<div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error-message">
+				</div>
 
-		</div>
+			</div>
 
-		<!-- 終了日 -->
-		<div class="form-group">
+			<!-- 終了日 -->
+			<div class="form-group">
 
-		    <label for="endDate">終了日</label>
+				<label for="endDate">終了日</label>
 
-		    <input type="date"
-		           id="endDate"
-		           th:field="*{endDate}">
+				<input type="date" id="endDate" th:field="*{endDate}">
 
-		    <div th:if="${#fields.hasErrors('endDate')}"
-		         th:errors="*{endDate}"
-		         class="error-message">
-		    </div>
+				<div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="error-message">
+				</div>
 
-		    <div th:if="${#fields.hasErrors('validDateRange')}"
-		         th:errors="*{validDateRange}"
-		         class="error-message">
-		    </div>
+				<div th:if="${#fields.hasErrors('validDateRange')}" th:errors="*{validDateRange}" class="error-message">
+				</div>
 
-		</div>
+			</div>
 
-        <!-- ボタン -->
-        <div class="button-area">
+			<!-- CSRFトークン -->
+			<input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-            <button type="submit" class="update-btn">
-                更新
-            </button>
+			<!-- ボタン -->
+			<div class="button-area">
 
-            <a href="/tasks" class="cancel-btn">
-                ← キャンセル
-            </a>
+				<button type="submit" class="update-btn">
+					更新
+				</button>
 
-        </div>
+				<a href="/tasks" class="cancel-btn">
+					← キャンセル
+				</a>
 
-    </form>
+			</div>
 
-</div>
+		</form>
+
+	</div>
 
 </body>
+
 </html>

@@ -5,5 +5,17 @@ bin/
 .classpath
 .project
 *.class
+
 src/main/resources/application-local.properties
 .env
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Logs
+*.log

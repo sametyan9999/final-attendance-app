@@ -3,10 +3,6 @@ package sample.common.dao.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 // タスク情報を保持するEntity
 public class Task {
 
@@ -14,19 +10,14 @@ public class Task {
 
     private String username;
 
-    @NotBlank(message = "タイトルを入力してください")
     private String title;
 
-    @NotBlank(message = "内容を入力してください")
     private String content;
 
-    @NotBlank(message = "登録者を入力してください")
     private String name;
 
-    @NotNull(message = "開始日を入力してください")
     private LocalDate startDate;
 
-    @NotNull(message = "終了日を入力してください")
     private LocalDate endDate;
 
     private LocalDateTime createdAt;
@@ -105,17 +96,5 @@ public class Task {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    // 開始日 <= 終了日 のチェック
-    @AssertTrue(message = "終了日は開始日以降を入力してください")
-    public boolean isValidDateRange() {
-
-        // 未入力時はチェックしない
-        if (startDate == null || endDate == null) {
-            return true;
-        }
-
-        return !startDate.isAfter(endDate);
     }
 }

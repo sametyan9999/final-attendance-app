@@ -1,5 +1,7 @@
 package sample.common.service;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -16,9 +18,14 @@ public class TaskService {
     public static final int PAGE_SIZE = 10;
 
     private final TaskMapper taskMapper;
+    private final Clock clock;
 
-    public TaskService(TaskMapper taskMapper) {
+    public TaskService(
+            TaskMapper taskMapper,
+            Clock clock) {
+
         this.taskMapper = taskMapper;
+        this.clock = clock;
     }
 
     // ログインユーザーのタスク一覧取得
@@ -59,6 +66,8 @@ public class TaskService {
             TaskForm form,
             String username) {
 
+        LocalDateTime now = LocalDateTime.now(clock);
+
         Task task = new Task();
 
         task.setTitle(form.getTitle());
@@ -70,6 +79,10 @@ public class TaskService {
         // セッション中のログインユーザーを登録者として設定する
         task.setUsername(username);
 
+        // アプリ側で時刻を設定する
+        task.setCreatedAt(now);
+        task.setUpdatedAt(now);
+
         taskMapper.insert(task);
     }
 
@@ -79,6 +92,8 @@ public class TaskService {
             Integer id,
             TaskForm form,
             String username) {
+
+        LocalDateTime now = LocalDateTime.now(clock);
 
         Task task = new Task();
 
@@ -92,6 +107,9 @@ public class TaskService {
         // 他ユーザーのタスク更新を防ぐため、
         // ログインユーザー名を条件に含める
         task.setUsername(username);
+
+        // 更新日時をアプリ側で設定する
+        task.setUpdatedAt(now);
 
         taskMapper.updateByOwner(
                 task,

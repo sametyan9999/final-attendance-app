@@ -8,12 +8,12 @@ CREATE TABLE IF NOT EXISTS tasks (
     id BIGSERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL REFERENCES login(username) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
+    content VARCHAR(2000) NOT NULL,
     name VARCHAR(100) NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
     CONSTRAINT chk_dates CHECK (start_date <= end_date)
 );
 
