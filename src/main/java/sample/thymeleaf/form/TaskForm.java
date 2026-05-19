@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Size;
 
 public class TaskForm {
 
+    private Integer id;
+
     @NotBlank(message = "タイトルを入力してください")
     @Size(max = 255, message = "タイトルは255文字以内で入力してください")
     private String title;
@@ -27,7 +29,6 @@ public class TaskForm {
     @NotNull(message = "終了日を入力してください")
     private LocalDate endDate;
 
-    // 開始日より前の終了日は入力できないようにする
     @AssertTrue(message = "終了日は開始日以降を入力してください")
     public boolean isValidDateRange() {
 
@@ -38,7 +39,13 @@ public class TaskForm {
         return !startDate.isAfter(endDate);
     }
 
-    // getter setter
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

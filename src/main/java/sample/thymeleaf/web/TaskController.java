@@ -82,6 +82,7 @@ public class TaskController {
         // DB Entityを直接フォームに渡さないようにする
         TaskForm form = new TaskForm();
 
+        form.setId(task.getId());
         form.setTitle(task.getTitle());
         form.setContent(task.getContent());
         form.setName(task.getName());
